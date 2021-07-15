@@ -40,7 +40,7 @@ const removeRolePolicy = async ({ iam, name, policy }) => {
   }
 }
 
-const createRole = async ({ iam, name, service, policy }) => {
+const createRole = async ({ iam, name, service, policy, description }) => {
   const assumeRolePolicyDocument = {
     Version: '2012-10-17',
     Statement: {
@@ -54,6 +54,7 @@ const createRole = async ({ iam, name, service, policy }) => {
   const roleRes = await iam
     .createRole({
       RoleName: name,
+      Description: description,
       Path: '/',
       AssumeRolePolicyDocument: JSON.stringify(assumeRolePolicyDocument)
     })
@@ -105,7 +106,7 @@ const getRole = async ({ iam, name }) => {
   }
 }
 
-const updateAssumeRolePolicy = async ({ iam, name, service }) => {
+const updateAssumeRolePolicy = async ({ iam, name, service, description }) => {
   const assumeRolePolicyDocument = {
     Version: '2012-10-17',
     Statement: {
@@ -119,6 +120,7 @@ const updateAssumeRolePolicy = async ({ iam, name, service }) => {
   await iam
     .updateAssumeRolePolicy({
       RoleName: name,
+      Description: description,
       PolicyDocument: JSON.stringify(assumeRolePolicyDocument)
     })
     .promise()

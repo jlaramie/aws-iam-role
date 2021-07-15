@@ -16,7 +16,8 @@ const defaults = {
   policy: {
     arn: 'arn:aws:iam::aws:policy/AdministratorAccess'
   },
-  region: 'us-east-1'
+  region: 'us-east-1',
+  description: 'A role created by Serverless Components'
 }
 
 class AwsIamRole extends Component {
@@ -26,7 +27,7 @@ class AwsIamRole extends Component {
 
     this.context.status(`Deploying`)
 
-    inputs.name = this.state.name || this.context.resourceId()
+    inputs.name = this.state.name || inputs.name  || this.context.resourceId()
 
     this.context.debug(`Syncing role ${inputs.name} in region ${inputs.region}.`)
     const prevRole = await getRole({ iam, ...inputs })
